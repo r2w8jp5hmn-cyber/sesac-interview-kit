@@ -528,12 +528,19 @@
   }
 
   /* 카드를 열었을 때 제목 줄이 상단 고정 헤더에 가리지 않게 */
-  function revealCard(card) {
-    if (!card) return;
+  function nudge(card) {
+    if (!card || !card.isConnected) return;
     var hd = document.querySelector("header");
     var top = card.getBoundingClientRect().top;
     var limit = (hd ? hd.getBoundingClientRect().height : 0) + 6;
     if (top < limit) window.scrollBy(0, top - limit);
+  }
+  var nudgeTimer = null;
+  function revealCard(card) {
+    nudge(card);
+    /* 위에 열려 있던 카드가 접히면 위치가 당겨지므로 애니메이션이 끝난 뒤 한 번 더 */
+    clearTimeout(nudgeTimer);
+    nudgeTimer = setTimeout(function () { nudge(card); }, 320);
   }
 
   function render(keepScroll) {
