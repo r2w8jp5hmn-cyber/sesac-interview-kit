@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F6F8">
+<meta name="description" content="새싹(SeSAC) AI·PM 캠퍼스별 예상 질문과 첫 문장·키워드·답변 예시를 모은 면접 치트키">
+<title>면접 치트키 · 새싹 SeSAC</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --bg:#F5F6F8;
+    --card:#FFFFFF;
+    --ink:#17181B;
+    --body:#3D444E;
+    --sub:#878D96;
+    --soft:#A3A9B2;
+    --line:#E9EBEF;
+    --line-soft:#F0F2F5;
+    --chip:#F3F5F8;
+    --chip-ink:#4C5561;
+    --dark:#1F2328;
+    --shadow:0 1px 2px rgba(16,24,40,.045), 0 1px 1px rgba(16,24,40,.02);
+    --r:18px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{
+    font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
+    font-size:14px;line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    word-break:keep-all;
+  }
+  button{font-family:inherit;cursor:pointer}
+  .app{max-width:520px;margin:0 auto;padding:0 12px 26px}
+
+  /* header */
+  header{
+    position:sticky;top:0;z-index:30;
+    margin:0 -12px;padding:11px 12px 6px;
+    background:rgba(245,246,248,.94);
+    -webkit-backdrop-filter:saturate(180%) blur(14px);
+    backdrop-filter:saturate(180%) blur(14px);
+  }
+  .brand{display:flex;align-items:center;gap:9px;margin:0 2px 9px}
+  .mark{
+    width:26px;height:26px;border-radius:9px;background:var(--dark);
+    color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;
+    letter-spacing:-.02em;flex:0 0 auto;
+  }
+  .brand h1{font-size:14.5px;font-weight:700;margin:0;letter-spacing:-.01em;line-height:1.25}
+  .brand p{margin:0;font-size:10.5px;color:var(--sub);line-height:1.3}
+
+  .tabs{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;padding:0 0 5px;-webkit-overflow-scrolling:touch}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{
+    flex:0 0 auto;border:1px solid transparent;background:#EDEFF3;color:#5B6472;
+    font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px;
+    white-space:nowrap;letter-spacing:-.01em;transition:background .18s,color .18s;
+  }
+  .tab[aria-selected="true"]{background:var(--dark);color:#fff;box-shadow:0 1px 3px rgba(16,24,40,.16)}
+  .tab:active{transform:scale(.98)}
+
+  /* generic */
+  .view{animation:fadeUp .22s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .view{animation:none}
+    .q-body{transition:none}
+  }
+  .sec{font-size:11.5px;font-weight:600;color:var(--sub);margin:13px 5px 7px;letter-spacing:.01em}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    box-shadow:var(--shadow);
+  }
+  .muted{color:var(--sub)}
+
+  /* schedule card */
+  .sched{padding:13px 14px;margin-bottom:6px}
+  .sched .who{display:flex;align-items:center;gap:6px;margin-bottom:5px;flex-wrap:wrap}
+  .sched .cname{font-size:12px;font-weight:700;letter-spacing:-.01em}
+  .pill{font-size:10px;font-weight:600;color:#5B6472;background:#F1F3F6;border-radius:999px;padding:2px 7px}
+  .sched .line1{font-size:13px;font-weight:600;line-height:1.5;margin:0;letter-spacing:-.01em}
+  .sched .line2{font-size:11.5px;color:var(--sub);margin:2px 0 0}
+  .sched .focus{font-size:11.5px;color:#5B6472;margin:7px 0 0;padding-top:7px;border-top:1px dashed var(--line)}
+  .sched .focus b{font-weight:600;color:var(--ink)}
+
+  /* flow (구조도) */
+  .flow{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:17px 13px 14px}
+  .flow .cap{font-size:11px;color:var(--soft);text-align:center;margin:0 0 13px}
+  .step{text-align:center}
+  .step h3{font-size:15px;font-weight:700;margin:0;letter-spacing:-.015em}
+  .step p{font-size:12px;color:#8D939C;margin:4px 0 0;line-height:1.55}
+  .arw{display:block;text-align:center;color:#C9CED5;font-size:15px;line-height:1;margin:9px 0}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:1px}
+  .pair .box{
+    border:1px solid var(--line);background:#fff;border-radius:14px;
+    padding:11px 7px 10px;text-align:center;box-shadow:0 1px 2px rgba(16,24,40,.03);
+  }
+  .pair .box h4{font-size:12.5px;font-weight:700;margin:0 0 7px;letter-spacing:-.01em}
+  .pair .box span{display:block;font-size:10.5px;color:#8D939C;line-height:1.4}
+  .pair .box .mini-arw{display:block;color:#D2D7DE;font-size:9px;line-height:1;margin:3px 0}
+  .pair .box b{display:block;font-size:11px;font-weight:700;margin-top:6px;color:#2A2F36}
+  .final{
+    margin-top:12px;background:#F7F8FA;border-radius:12px;padding:10px 8px;
+    text-align:center;font-size:12.5px;font-weight:700;letter-spacing:-.01em;
+  }
+  .flow-tip{font-size:11px;color:var(--sub);text-align:center;margin:10px 6px 0;line-height:1.6}
+
+  /* answer card */
+  .answer{padding:14px}
+  .blk-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .blk-label{font-size:10.5px;font-weight:600;color:var(--soft);letter-spacing:.02em}
+  .answer .txt{font-size:13px;color:var(--body);line-height:1.78;margin:6px 0 0;white-space:pre-line}
+  .answer .note{font-size:10.5px;color:var(--soft);margin:9px 0 0;padding-top:8px;border-top:1px dashed var(--line);line-height:1.55}
+
+  /* question accordion */
+  .qlist{display:flex;flex-direction:column;gap:7px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+  .q-head{
+    display:flex;align-items:flex-start;gap:8px;width:100%;text-align:left;
+    background:none;border:0;padding:12px 12px 12px 12px;color:inherit;
+  }
+  .q-no{
+    flex:0 0 auto;font-size:10.5px;font-weight:700;color:#8B929B;
+    background:#F1F3F6;border-radius:7px;padding:2px 5px;margin-top:2px;line-height:1.4;
+  }
+  .q-title{flex:1 1 auto;font-size:13.5px;font-weight:600;line-height:1.45;letter-spacing:-.01em}
+  .q-tag{
+    display:inline-block;font-size:9.5px;font-weight:700;color:#6B4B12;background:#FBF0DA;
+    border-radius:999px;padding:1px 6px;margin-right:5px;vertical-align:1px;letter-spacing:0;
+  }
+  .chev{flex:0 0 auto;width:14px;height:14px;margin-top:3px;color:#B6BCC4;transition:transform .22s ease}
+  .q.open .chev{transform:rotate(180deg)}
+  .q-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .26s ease}
+  .q.open .q-body{grid-template-rows:1fr}
+  .q-inner{overflow:hidden}
+  @supports not (grid-template-rows: 0fr){
+    .q-body{display:none}
+    .q.open .q-body{display:block}
+  }
+  .q-view{padding:1px 13px 14px;border-top:1px solid var(--line-soft);margin-top:0}
+  .blk{padding-top:11px}
+  .anchor{
+    font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.6;margin:5px 0 0;
+    padding-left:10px;border-left:2.5px solid var(--dark);letter-spacing:-.012em;
+  }
+  .chips{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:7px}
+  .chip{
+    font-size:11px;font-weight:600;color:var(--chip-ink);background:var(--chip);
+    border:1px solid var(--line-soft);border-radius:999px;padding:3px 9px;letter-spacing:-.01em;
+  }
+  .chips .ca{font-size:10px;color:#C5CAD1}
+  .example{font-size:12.5px;color:var(--body);line-height:1.8;margin:6px 0 0;white-space:pre-line}
+  .mini{
+    border:1px solid #E4E7EC;background:#fff;color:#6B7280;font-size:10.5px;font-weight:600;
+    border-radius:999px;padding:3px 9px;line-height:1.5;letter-spacing:-.01em;
+  }
+  .mini:active{background:#F5F6F8}
+  .mini.ghost{border-color:transparent;background:none;color:#A3A9B2;padding:3px 4px}
+
+  /* edit form */
+  .form{padding-top:11px}
+  .form label{display:block;font-size:10.5px;font-weight:600;color:var(--soft);margin:0 0 4px}
+  .form .fg{margin-bottom:9px}
+  .form input,.form textarea{
+    width:100%;border:1px solid #E1E5EA;background:#FBFCFD;border-radius:10px;
+    padding:8px 10px;font-family:inherit;font-size:12.5px;line-height:1.65;color:var(--ink);
+    resize:vertical;outline:none;
+  }
+  .form input:focus,.form textarea:focus{border-color:#C3C9D2;background:#fff}
+  .form textarea{min-height:70px}
+  .form .btns{display:flex;gap:6px;align-items:center;margin-top:2px}
+  .btn{
+    border:0;border-radius:10px;font-size:12px;font-weight:700;padding:8px 14px;letter-spacing:-.01em;
+  }
+  .btn.primary{background:var(--dark);color:#fff}
+  .btn.sub{background:#F1F3F6;color:#5B6472}
+  .form .hint{font-size:10px;color:var(--soft);margin-left:auto}
+
+  /* footer */
+  footer{margin:18px 2px 0;text-align:center}
+  footer p{font-size:10px;color:#A9AFB8;margin:0;line-height:1.6}
+  .reset{
+    margin-top:6px;border:0;background:none;color:#B0B6BE;font-size:10px;
+    text-decoration:underline;text-underline-offset:2px;padding:4px;
+  }
+
+  /* toast */
+  #toast{
+    position:fixed;left:50%;bottom:18px;transform:translate(-50%,14px);
+    background:rgba(31,35,40,.94);color:#fff;font-size:11.5px;font-weight:600;
+    padding:7px 14px;border-radius:999px;opacity:0;pointer-events:none;
+    transition:opacity .2s,transform .2s;z-index:50;white-space:nowrap;
+  }
+  #toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">
+      <div class="mark">면접</div>
+      <div>
+        <h1>면접 치트키</h1>
+        <p>새싹 SeSAC · AI · PM</p>
+      </div>
+    </div>
+    <div class="tabs" role="tablist" aria-label="캠퍼스 선택">
+      <button class="tab" role="tab" id="tab-flow" data-tab="flow" aria-selected="true">구조도</button>
+      <button class="tab" role="tab" id="tab-geumcheon" data-tab="geumcheon" aria-selected="false">금천 · AX</button>
+      <button class="tab" role="tab" id="tab-yongsan" data-tab="yongsan" aria-selected="false">용산 · PM</button>
+      <button class="tab" role="tab" id="tab-yangcheon" data-tab="yangcheon" aria-selected="false">양천 · AI·데이터</button>
+    </div>
+  </header>
+
+  <main id="view" class="view" role="tabpanel"></main>
+
+  <footer>
+    <p>수정한 내용은 이 기기 브라우저에 임시 저장됩니다</p>
+    <button class="reset" id="reset" type="button">수정 내용 초기화</button>
+  </footer>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var KEY = "sesac-interview-kit:v1";
+  var TABKEY = "sesac-interview-kit:tab";
+  var storageOK = true;
+
+  var ANS_FULL =
+    "원래 이 분야에 흥미는 있었지만 비전공자라 취업에 한계가 있다고 느껴 사업을 준비하고 있었습니다. " +
+    "그러다 AI를 직접 다뤄보며 가능성을 느꼈고, 이 과정을 통해 체계적인 직무 역량을 키우면 " +
+    "비전공자도 충분히 취업할 수 있겠다는 확신이 들어 사업은 완전히 접고 커리어를 쌓기로 결심했습니다.";
+
+  var CAMPUSES = [
+    {
+      id: "geumcheon",
+      tab: "금천 · AX",
+      name: "금천 · 업스테이지 K-AI AX 컨설턴트",
+      pill: "서류 통과",
+      line1: "레벨테스트 11/30~12/1 · 비대면 면접 12/3~4",
+      line2: "발표 12/8 · 12/21 개강 (20주 · 평일 09:00–18:00)",
+      focus: "업무 구조화 · AI 자동화 · ROI",
+      qs: [
+        {
+          q: "왜 창업 대신 취업을 선택했나요?",
+          tag: "거의 100%",
+          a: "원래 이 분야에 흥미는 있었지만, 비전공자라 취업에 한계를 느껴 사업을 준비하고 있었습니다.",
+          k: ["AI 직접 경험", "과정 필요성 확신", "사업 접고 취업"],
+          e: "그러다 AI를 직접 다뤄보며 가능성을 느꼈고, 이 과정을 통해 체계적인 직무 역량을 키우면 비전공자도 충분히 취업할 수 있겠다는 확신이 들어 사업은 완전히 접고 커리어를 쌓기로 결심했습니다.\n\n특히 창업 준비 때 원가·메뉴판을 AI로 직접 자동화해 보면서, 실무에서는 이걸 훨씬 체계적으로 한다는 걸 알았습니다. 그래서 20주 동안 AX 실무를 제대로 배워 컨설턴트로 일하고 싶습니다."
+        },
+        {
+          q: "AX 컨설턴트가 무슨 일을 하는지 알고 있나요?",
+          a: "고객사 업무를 뜯어보고 병목을 찾아 AI로 자동화한 뒤, 성과를 숫자로 확인하는 일이라고 이해하고 있습니다.",
+          k: ["업무 진단", "AI 자동화", "ROI 확인"],
+          e: "제가 창업 준비 때 한 일도 순서가 같았습니다. 재료를 사고 원가를 계산하는 과정이 손이 너무 많이 가서, 캡처만 넣으면 성분·원가·판매가가 자동으로 나오게 만들었고, 시식자 피드백을 받아 계속 고쳤습니다.\n\n다만 혼자 만든 수준이라, 고객사 환경에 맞춰 적용하고 성과를 수치로 증명하는 부분은 이 과정에서 배워야 한다고 생각합니다. 현장에서 불편한 지점을 찾아 바로 도구로 만들어보는 게 제 강점이라 이 직무가 잘 맞습니다."
+        },
+        {
+          q: "AI로 업무를 자동화해 본 경험을 말해주세요.",
+          a: "창업 준비 때 원가·칼로리 계산부터 시식용 메뉴판까지 AI로 직접 자동화했습니다.",
+          k: ["캡처 입력", "자동 계산·링크 연동", "피드백 수정"],
+          e: "재료 라벨이나 영수증을 캡처해서 넣으면, AI가 성분과 중량·단가를 읽어 원가와 칼로리를 계산하고 판매가 후보까지 표로 정리해 주도록 만들었습니다. 시식용 메뉴판과 링크로 연결해서, 원가가 바뀌면 메뉴판 가격도 같이 볼 수 있게 했습니다.\n\n시식회에서 '소스가 섞이는 게 불편하다'는 말이 나오자 옵션을 분리했고, 그 뒤로도 요청이 들어올 때마다 계속 고쳤습니다. 자동화는 한 번 만들고 끝이 아니라, 쓰는 사람 피드백으로 고쳐야 완성된다는 걸 배웠습니다."
+        },
+        {
+          q: "고객사 담당자와 의견이 부딪히면 어떻게 조율하나요?",
+          a: "게스트하우스 3년 운영하며 매일 다른 고객과 업체 사이에서 조율해 왔습니다.",
+          k: ["요구 글로 정리", "기준 합의", "결과로 확인"],
+          e: "체크인 문의가 반복되는데 직원마다 답이 달라서 컴플레인이 생긴 적이 있습니다. 문의 유형을 먼저 정리하고, 체크인 가이드 한 장으로 기준을 맞춘 다음, 새 직원도 같은 응대를 하도록 했습니다.\n\n제 방식은 상대 요구를 먼저 글로 정리해서 보여드리고, 기준을 같이 합의하는 쪽입니다. AI로 만든 결과물도 담당자가 직접 써보고 피드백을 주는 방식으로 맞춰 왔습니다."
+        },
+        {
+          q: "20주 평일 전일제 과정인데 끝까지 다닐 수 있나요?",
+          a: "네, 지금은 다른 일을 병행하지 않고 이 과정과 취업에만 집중할 계획입니다.",
+          k: ["전일제 집중", "프로젝트 3회", "수료 후 AX 실무"],
+          e: "단기 알바는 과정 시작 전에 정리하고, 평일 09시부터 18시까지는 과정에만 시간을 쓰려고 합니다.\n\n20주 안에 진단·PoC, 역할 교환, 파트너 기업 과제까지 프로젝트가 3번 있는 걸로 알고 있습니다. 세 번 다 결과물을 남겨서 포트폴리오로 만들고, 수료하면 사내 AX·운영기획이나 AX 컨설턴트로 바로 취업하고 싶습니다."
+        }
+      ]
+    },
+    {
+      id: "yongsan",
+      tab: "용산 · PM",
+      name: "용산 · 리멤버 × 러닝스푼즈 AI Agent PM/PO",
+      pill: "접수 완료",
+      line1: "테스트 12/7 · 면접 12/8~9",
+      line2: "16주 420h · 수업 월~목 15:00–22:00",
+      focus: "사용자 문제 정의 · 피드백 유지보수 · 전환율",
+      qs: [
+        {
+          q: "왜 창업 대신 취업을 선택했나요?",
+          tag: "거의 100%",
+          a: "원래 이 분야에 흥미는 있었지만, 비전공자라 취업에 한계를 느껴 사업을 준비하고 있었습니다.",
+          k: ["AI 직접 경험", "과정 필요성 확신", "사업 접고 취업"],
+          e: "그러다 AI를 직접 다뤄보며 가능성을 느꼈고, 이 과정을 통해 체계적인 직무 역량을 키우면 비전공자도 충분히 취업할 수 있겠다는 확신이 들어 사업은 완전히 접고 커리어를 쌓기로 결심했습니다.\n\n제 강점은 사용자의 불편을 찾아 기획으로 푸는 쪽이라고 생각합니다. 16주 동안 PRD부터 MVP 배포까지 직접 해보면서 AI PM/PO로 일할 수 있는 사람이 되고 싶습니다."
+        },
+        {
+          q: "개발자가 아니라 PM/PO로 가는 이유가 뭔가요?",
+          a: "개발자보다 현장의 불편을 찾아 서비스로 기획하고 끝까지 개선하는 일에 강점이 있다고 생각합니다.",
+          k: ["사용자 관점", "문제 정의", "끝까지 개선"],
+          e: "창업 준비를 하면서 메뉴와 동선, 가격을 직접 정하고 시식자 반응을 보며 계속 고쳤습니다. 코드는 AI와 노코드로 직접 붙여볼 수 있지만, 제가 더 잘하는 건 '무엇을 왜 만드는지'를 정하고 피드백으로 고치는 쪽이었습니다.\n\nPM/PO는 그 일을 직업으로 하는 자리라고 생각합니다. 개발을 몰라서가 아니라, 문제를 정의하는 쪽에 강점이 있어서 지원했습니다."
+        },
+        {
+          q: "사용자 불편을 발견하고 개선한 경험을 말해주세요.",
+          a: "시식자 피드백을 받고 '안 섞어 먹는 옵션'을 추가하며 계속 유지보수했습니다.",
+          k: ["불편 발견", "옵션 분리", "끝까지 개선"],
+          e: "시식회에서 '소스가 섞여서 먹기 불편하다'는 반응이 나왔습니다. 처음엔 소스를 고치는 걸 생각했는데, 다시 물어보니 문제는 맛이 아니라 먹는 방식이었습니다. 그래서 그릇과 포장을 따로 담는 옵션으로 분리했고, 다음 시식에서 반응이 좋아졌습니다.\n\n사용자는 기능 이름이 아니라 자기 생활의 불편을 말한다는 걸 배웠습니다. 그 말을 그대로 듣지 않고 원인을 찾는 게 PM의 일이라고 생각합니다."
+        },
+        {
+          q: "데이터를 보고 판단을 바꾼 경험이 있나요?",
+          a: "백화점 팝업에서 요일별 고객과 가격대별 반응을 관찰해 응대와 진열을 바로 바꿨습니다.",
+          k: ["요일·고객 관찰", "가격 저항선", "전환율 개선"],
+          e: "주말에는 나들이객이 많아 빠르게 사고 가는 세트가 잘 나갔고, 일요일 저녁에는 근처 사는 분들이 천천히 비교하며 소량을 샀습니다. 시간대별 판매 수량과 가격대별 문의·구매 비율을 적어두고, 추천 상품과 진열을 바꿨습니다.\n\n그때 숫자를 보는 감각이 생겼고, 이 과정에서 데이터·퍼널 분석을 제대로 배우고 싶습니다."
+        },
+        {
+          q: "AI Agent 서비스 아이디어를 하나 기획해 본다면?",
+          a: "중고거래 앱에서 이사 가구를 살 때 비교가 너무 불편해서, 목적별 비교 보드와 AI 조합 추천을 떠올렸습니다.",
+          k: ["실제 불편", "AI 비교·추천", "거래 전환"],
+          e: "최근 이사하면서 침대·책상 같은 가구를 중고로 여러 개 샀는데, 관심목록 하나에 모든 카테고리가 섞여 있어서 목적별로 비교가 안 됐습니다. 사이즈·가격·거리는 외워야 하고, 침대와 책상의 색 조합을 보려면 스크린샷을 찍어 나란히 놓고 봐야 했습니다.\n\n그래서 목적별 비교 보드에 AI가 사이즈·색상·가격·거리를 자동 추출해 비교해 주고, 성향별로 가성비·미감·하이엔드 조합을 추천하는 기능을 생각했습니다. 채팅과 거래 전환율이 올라가는 구조입니다. 이걸 이 과정에서 PRD부터 MVP 배포까지 직접 해보고 싶습니다."
+        }
+      ]
+    },
+    {
+      id: "yangcheon",
+      tab: "양천 · AI·데이터",
+      name: "양천 · 핀인사이트 AI·데이터",
+      pill: "테스트 통과",
+      line1: "면접 12/10(목) 10:40~11:00 · 양천구보건소 3F",
+      line2: "발표 12/11 · 12/21~3/30 (3개월 · 인턴 연계)",
+      focus: "숫자로 구조화 · 원가·마진 · 3개월 집중",
+      qs: [
+        {
+          q: "왜 창업 대신 취업을 선택했나요?",
+          tag: "거의 100%",
+          a: "원래 이 분야에 흥미는 있었지만, 비전공자라 취업에 한계를 느껴 사업을 준비하고 있었습니다.",
+          k: ["AI 직접 경험", "과정 필요성 확신", "사업 접고 취업"],
+          e: "그러다 AI를 직접 다뤄보며 가능성을 느꼈고, 이 과정을 통해 체계적인 직무 역량을 키우면 비전공자도 충분히 취업할 수 있겠다는 확신이 들어 사업은 완전히 접고 커리어를 쌓기로 결심했습니다.\n\n3개월이라는 짧은 기간이라 더 집중해서 배우고, 인턴 연계로 실무까지 이어가고 싶습니다."
+        },
+        {
+          q: "데이터로 문제를 해결한 경험이 있나요?",
+          a: "원가를 감이 아니라 숫자로 구조화해서, 단가가 바뀌면 마진이 바로 보이게 만들었습니다.",
+          k: ["단가·중량 정리", "원가 구조화", "마진 판단"],
+          e: "재료별 단가와 1회 제공량을 표로 정리하고, 35g 기준 1회 원가를 계산했습니다. 판매가 후보별로 마진을 같이 보이게 하니 '이 메뉴는 팔수록 남는 게 없다'는 게 숫자로 보였고, 실제로 메뉴에서 뺐습니다.\n\n그때 데이터는 쌓는 게 아니라 결정에 쓰여야 한다는 걸 배웠습니다. 이 과정에서 그 감각을 SQL과 지표로 제대로 만들고 싶습니다."
+        },
+        {
+          q: "3개월 집중 과정인데 무엇을 얻어 가고 싶나요?",
+          a: "3개월이라는 짧은 기간인 만큼, 배운 것을 바로 결과물로 남기는 데 집중하겠습니다.",
+          k: ["3개월 몰입", "결과물 1개", "인턴 연계"],
+          e: "매일 배운 걸 그날 정리하고, 주제를 하나 정해서 과정 내내 고도화하겠습니다. 예를 들어 팝업 매출·재고 대시보드처럼 제가 직접 겪은 문제로 만들면, 인턴에서도 바로 써먹을 수 있다고 생각합니다.\n\n속도가 강점인 과정이라 저도 결과물 속도로 증명하고 싶습니다. 인턴 기간에는 실무 데이터로 검증해서 정규직까지 이어가고 싶습니다."
+        },
+        {
+          q: "비전공자인데 데이터·AI를 따라갈 수 있나요?",
+          a: "비전공자지만 숫자로 원가를 정리하고 AI로 자동화해 본 경험이 있어, 도구는 과정에서 배우면 된다고 생각합니다.",
+          k: ["직접 만들어 본 경험", "매일 복습", "결과물로 증명"],
+          e: "엑셀과 구글시트는 피벗과 함수를 실무에서 써봤고, 노션으로 정리하고 ChatGPT·Claude로 자동화를 만들어 본 경험이 있습니다. 파이썬은 이제 시작이지만, 매일 한 시간씩 복습하고 모르는 건 그날 정리해서 다음 날 질문하는 방식으로 따라가겠습니다.\n\n비전공자라서 오히려 현장 언어로 데이터를 설명할 수 있다는 게 강점이라고 생각합니다."
+        },
+        {
+          q: "마지막으로 하고 싶은 말이 있나요?",
+          a: "현장에서 3년 운영하고 팝업에서 직접 팔아본 사람으로서, 이제는 그 경험을 데이터와 AI로 증명하고 싶습니다.",
+          k: ["현장 경험", "데이터·AI", "3개월 몰입"],
+          e: "게스트하우스를 3년 운영하고, 백화점 팝업에서 직접 팔고, 창업 준비를 하며 원가와 메뉴판을 AI로 자동화했습니다. 해본 사람이라 현장에서 뭐가 불편한지 압니다.\n\n말로만 지원하는 게 아니라 3개월 동안 결과물로 보여드리겠습니다. 오늘 면접 기회 주셔서 감사합니다."
+        }
+      ]
+    }
+  ];
+
+  /* ---------- storage ---------- */
+  var store = {};
+  try {
+    store = JSON.parse(localStorage.getItem(KEY) || "{}") || {};
+  } catch (e) { storageOK = false; store = {}; }
+
+  function saveStore() {
+    try { localStorage.setItem(KEY, JSON.stringify(store)); }
+    catch (e) { storageOK = false; }
+  }
+
+  function getQ(campus, idx) {
+    var q = campus.qs[idx];
+    var ov = store[campus.id + "-" + (idx + 1)];
+    if (!ov) return { a: q.a, k: q.k.slice(), e: q.e, edited: false };
+    return {
+      a: ov.a != null ? ov.a : q.a,
+      k: Array.isArray(ov.k) ? ov.k : q.k.slice(),
+      e: ov.e != null ? ov.e : q.e,
+      edited: true
+    };
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  /* ---------- render ---------- */
+  var view = document.getElementById("view");
+  var activeTab = "flow";
+  var openId = null;
+
+  try {
+    var t = localStorage.getItem(TABKEY);
+    if (t && (t === "flow" || CAMPUSES.some(function (c) { return c.id === t; }))) activeTab = t;
+  } catch (e) {}
+
+  function setTabs() {
+    var tabs = document.querySelectorAll(".tab");
+    for (var i = 0; i < tabs.length; i++) {
+      var on = tabs[i].dataset.tab === activeTab;
+      tabs[i].setAttribute("aria-selected", on ? "true" : "false");
+      if (on && tabs[i].scrollIntoView) {
+        try { tabs[i].scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" }); } catch (e) {}
+      }
+    }
+  }
+
+  function flowHTML() {
+    var full = store["answer-full"] && store["answer-full"].e != null ? store["answer-full"].e : ANS_FULL;
+    var fullEdited = !!(store["answer-full"] && store["answer-full"].e != null);
+    return '' +
+      '<div class="sec">답변 구조도 · 왜 창업 대신 취업</div>' +
+      '<div class="flow">' +
+        '<p class="cap">이 순서로 말하면 1분이 딱 맞습니다</p>' +
+        '<div class="step"><h3>과거 이력</h3><p>게스트하우스 3년 → 백화점 팝업 → 외식업 준비</p></div>' +
+        '<span class="arw">↓</span>' +
+        '<div class="step"><h3>강점 발견</h3><p>현장 불편 찾기 → AI 원가·메뉴판 자동화 → 피드백 유지보수</p></div>' +
+        '<span class="arw">↓</span>' +
+        '<div class="step"><h3>현실적 고민</h3><p>흥미는 있었지만 비전공자라 취업 한계를 느껴 사업 준비</p></div>' +
+        '<span class="arw">↓</span>' +
+        '<div class="step"><h3>커리어 전환 결심</h3><p>AI 가능성 확인 → 과정 통해 취업 확신 → 사업 접고 취업</p></div>' +
+        '<span class="arw">↓</span>' +
+        '<div class="pair">' +
+          '<div class="box"><h4>AX · 운영기획</h4>' +
+            '<span>기업 문제 발견</span><span class="mini-arw">↓</span>' +
+            '<span>프로세스 구조화</span><span class="mini-arw">↓</span>' +
+            '<span>AI 자동화 구현</span><b>생산성 향상</b></div>' +
+          '<div class="box"><h4>AI PM · PO</h4>' +
+            '<span>사용자 불편 발견</span><span class="mini-arw">↓</span>' +
+            '<span>시제품·가설 검증</span><span class="mini-arw">↓</span>' +
+            '<span>피드백 유지보수</span><b>사용자 가치 창출</b></div>' +
+        '</div>' +
+        '<span class="arw">↓</span>' +
+        '<div class="final">새싹 교육 → 실무 취업 → 전문성 축적</div>' +
+      '</div>' +
+      '<p class="flow-tip">1→4는 30초, 5에서 지원 직무를 짚고, 6으로 마무리하세요.</p>' +
+      '<div class="sec">답변 전문</div>' +
+      '<section class="card answer">' +
+        '<div class="blk-head"><span class="blk-label">왜 창업 대신 취업을 선택했나요?</span>' +
+          '<span class="acts">' +
+            (fullEdited ? '<button class="mini ghost" type="button" data-act="revert-full">기본값</button>' : '') +
+            '<button class="mini" type="button" data-act="edit-full">수정</button>' +
+          '</span>' +
+        '</div>' +
+        '<p class="txt" id="full-text">' + esc(full) + '</p>' +
+        '<p class="note">통째로 외우지 말고 첫 문장과 마지막 문장만 기억하세요. 나머지는 평소 말솜씨로 이어집니다.</p>' +
+      '</section>';
+  }
+
+  function campusHTML(c) {
+    var head = '' +
+      '<div class="sec">전형 일정</div>' +
+      '<section class="card sched">' +
+        '<div class="who"><span class="cname">' + esc(c.name) + '</span><span class="pill">' + esc(c.pill) + '</span></div>' +
+        '<p class="line1">' + esc(c.line1) + '</p>' +
+        '<p class="line2">' + esc(c.line2) + '</p>' +
+        '<p class="focus">이 캠퍼스에서 밀 것 — <b>' + esc(c.focus) + '</b></p>' +
+      '</section>' +
+      '<div class="sec">예상 질문 ' + c.qs.length + '개 · 눌러서 펼치기</div>' +
+      '<div class="qlist">';
+
+    var body = c.qs.map(function (q, i) {
+      var v = getQ(c, i);
+      var chips = v.k.map(function (k) { return '<span class="chip">' + esc(k) + '</span>'; }).join('<span class="ca">→</span>');
+      return '' +
+        '<article class="q" data-qid="' + c.id + '-' + (i + 1) + '" data-idx="' + i + '">' +
+          '<button class="q-head" type="button" data-act="toggle" aria-expanded="false">' +
+            '<span class="q-no">Q' + (i + 1) + '</span>' +
+            '<span class="q-title">' + (q.tag ? '<span class="q-tag">' + esc(q.tag) + '</span>' : '') + '<span>' + esc(q.q) + '</span></span>' +
+            '<svg class="chev" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 6L8 10.5L12.5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          '</button>' +
+          '<div class="q-body"><div class="q-inner"><div class="q-view">' +
+            '<div class="blk"><div class="blk-label">첫 문장 · 앵커</div><p class="anchor">' + esc(v.a) + '</p></div>' +
+            '<div class="blk"><div class="blk-label">키워드 3개</div><div class="chips">' + chips + '</div></div>' +
+            '<div class="blk"><div class="blk-head"><span class="blk-label">예상 답변 예시</span>' +
+              '<span class="acts">' + (v.edited ? '<button class="mini ghost" type="button" data-act="revert">기본값</button>' : '') +
+              '<button class="mini" type="button" data-act="edit">수정</button></span>' +
+            '</div><p class="example">' + esc(v.e) + '</p></div>' +
+          '</div></div></div>' +
+        '</article>';
+    }).join("");
+
+    return head + body + '</div>' +
+      '<p class="flow-tip" style="margin-top:12px">질문이 들리면 2초 숨 고르고, 첫 문장부터 꺼내세요.</p>';
+  }
+
+  function render() {
+    if (activeTab === "flow") {
+      view.innerHTML = flowHTML();
+    } else {
+      var c = CAMPUSES.filter(function (x) { return x.id === activeTab; })[0];
+      view.innerHTML = campusHTML(c);
+    }
+    setTabs();
+    if (openId) {
+      var el = view.querySelector('[data-qid="' + openId + '"]');
+      if (el) {
+        el.classList.add("open");
+        el.querySelector(".q-head").setAttribute("aria-expanded", "true");
+      }
+      openId = null;
+    }
+    view.classList.remove("view");
+    void view.offsetWidth;
+    view.classList.add("view");
+    window.scrollTo(0, 0);
+  }
+
+  /* ---------- interaction ---------- */
+  document.querySelector(".tabs").addEventListener("click", function (e) {
+    var b = e.target.closest(".tab");
+    if (!b) return;
+    activeTab = b.dataset.tab;
+    try { localStorage.setItem(TABKEY, activeTab); } catch (err) {}
+    openId = null;
+    render();
+  });
+
+  view.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-act]");
+    if (!btn) return;
+    var act = btn.dataset.act;
+
+    if (act === "toggle") {
+      var card = btn.closest(".q");
+      var isOpen = card.classList.contains("open");
+      var all = view.querySelectorAll(".q.open");
+      for (var i = 0; i < all.length; i++) {
+        all[i].classList.remove("open");
+        all[i].querySelector(".q-head").setAttribute("aria-expanded", "false");
+      }
+      if (!isOpen) {
+        card.classList.add("open");
+        btn.setAttribute("aria-expanded", "true");
+      }
+      return;
+    }
+
+    if (act === "edit") {
+      var q = btn.closest(".q");
+      var idx = Number(q.dataset.idx);
+      var c = CAMPUSES.filter(function (x) { return x.id === activeTab; })[0];
+      var v = getQ(c, idx);
+      var inner = q.querySelector(".q-inner");
+      inner.innerHTML = '' +
+        '<div class="q-view form">' +
+          '<div class="fg"><label for="f-a">첫 문장 · 앵커</label><textarea id="f-a" data-f="a">' + esc(v.a) + '</textarea></div>' +
+          '<div class="fg"><label for="f-k">키워드 (쉼표로 구분)</label><input id="f-k" data-f="k" type="text" value="' + esc(v.k.join(", ")) + '"></div>' +
+          '<div class="fg"><label for="f-e">예상 답변 예시</label><textarea id="f-e" data-f="e" style="min-height:150px">' + esc(v.e) + '</textarea></div>' +
+          '<div class="btns"><button class="btn primary" type="button" data-act="save">저장</button>' +
+          '<button class="btn sub" type="button" data-act="cancel">취소</button>' +
+          '<span class="hint">이 기기에만 저장</span></div>' +
+        '</div>';
+      openId = q.dataset.qid;
+      q.classList.add("open");
+      btn.setAttribute("aria-expanded", "true");
+      var ta = inner.querySelector("textarea");
+      if (ta) setTimeout(function () { ta.focus(); }, 60);
+      return;
+    }
+
+    if (act === "cancel") {
+      var qc = btn.closest(".q");
+      openId = qc.dataset.qid;
+      render();
+      return;
+    }
+
+    if (act === "save") {
+      var qs = btn.closest(".q");
+      var idx2 = Number(qs.dataset.idx);
+      var c2 = CAMPUSES.filter(function (x) { return x.id === activeTab; })[0];
+      var aEl = qs.querySelector('[data-f="a"]');
+      var kEl = qs.querySelector('[data-f="k"]');
+      var eEl = qs.querySelector('[data-f="e"]');
+      var kws = kEl.value.split(",").map(function (s) { return s.trim(); }).filter(Boolean);
+      store[c2.id + "-" + (idx2 + 1)] = {
+        a: aEl.value.trim() || CAMPUSES.filter(function (x) { return x.id === activeTab; })[0].qs[idx2].a,
+        k: kws.length ? kws : c2.qs[idx2].k,
+        e: eEl.value.trim() || c2.qs[idx2].e
+      };
+      saveStore();
+      openId = qs.dataset.qid;
+      render();
+      toast(storageOK ? "저장했어요" : "저장했지만 이 브라우저는 저장을 막고 있어요");
+      return;
+    }
+
+    if (act === "revert") {
+      var qr = btn.closest(".q");
+      var idx3 = Number(qr.dataset.idx);
+      delete store[activeTab + "-" + (idx3 + 1)];
+      saveStore();
+      openId = qr.dataset.qid;
+      render();
+      toast("기본 문구로 되돌렸어요");
+      return;
+    }
+
+    if (act === "edit-full") {
+      var sec = document.querySelector(".answer");
+      var full = store["answer-full"] && store["answer-full"].e != null ? store["answer-full"].e : ANS_FULL;
+      sec.innerHTML = '' +
+        '<div class="blk-head"><span class="blk-label">답변 전문</span></div>' +
+        '<div class="form">' +
+          '<div class="fg" style="margin-top:8px"><textarea id="f-full" style="min-height:150px">' + esc(full) + '</textarea></div>' +
+          '<div class="btns"><button class="btn primary" type="button" data-act="save-full">저장</button>' +
+          '<button class="btn sub" type="button" data-act="cancel-full">취소</button>' +
+          '<span class="hint">이 기기에만 저장</span></div>' +
+        '</div>';
+      var tf = sec.querySelector("textarea");
+      if (tf) setTimeout(function () { tf.focus(); }, 60);
+      return;
+    }
+
+    if (act === "cancel-full") { render(); return; }
+
+    if (act === "save-full") {
+      var val = document.querySelector("#f-full").value.trim();
+      if (val) store["answer-full"] = { e: val }; else delete store["answer-full"];
+      saveStore();
+      render();
+      toast(storageOK ? "저장했어요" : "저장했지만 이 브라우저는 저장을 막고 있어요");
+      return;
+    }
+
+    if (act === "revert-full") {
+      delete store["answer-full"];
+      saveStore();
+      render();
+      toast("기본 문구로 되돌렸어요");
+      return;
+    }
+  });
+
+  var toastTimer = null;
+  function toast(msg) {
+    var el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove("on"); }, 1800);
+  }
+
+  document.getElementById("reset").addEventListener("click", function () {
+    if (!Object.keys(store).length) { toast("수정한 내용이 없어요"); return; }
+    if (!window.confirm("수정한 내용을 모두 지우고 처음 상태로 돌아갈까요?")) return;
+    store = {};
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    render();
+    toast("처음 상태로 돌아왔어요");
+  });
+
+  render();
+  if (!storageOK) {
+    var f = document.querySelector("footer p");
+    if (f) f.textContent = "이 브라우저는 저장을 막고 있어 수정 내용이 유지되지 않을 수 있습니다";
+  }
+})();
+</script>
+</body>
+</html>
