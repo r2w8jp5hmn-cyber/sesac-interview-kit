@@ -135,7 +135,7 @@
   }
   .chev{flex:0 0 auto;width:14px;height:14px;margin-top:3px;color:#B6BCC4;transition:transform .22s ease}
   .q.open .chev{transform:rotate(180deg)}
-  .q-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .26s ease}
+  .q-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .26s ease;overflow-anchor:none}
   .q.open .q-body{grid-template-rows:1fr}
   .q-inner{overflow:hidden}
   @supports not (grid-template-rows: 0fr){
@@ -538,9 +538,10 @@
   var nudgeTimer = null;
   function revealCard(card) {
     nudge(card);
-    /* 위에 열려 있던 카드가 접히면 위치가 당겨지므로 애니메이션이 끝난 뒤 한 번 더 */
+    /* 위에 열려 있던 카드가 접혀 위치가 당겨지므로, 애니메이션이 끝난 뒤 한 번 더 보정 */
     clearTimeout(nudgeTimer);
-    nudgeTimer = setTimeout(function () { nudge(card); }, 320);
+    nudgeTimer = setTimeout(function () { nudge(card); }, 300);
+    setTimeout(function () { nudge(card); }, 640);
   }
 
   function render(keepScroll) {
