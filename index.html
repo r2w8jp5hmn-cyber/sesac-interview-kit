@@ -197,6 +197,20 @@
     transition:opacity .2s,transform .2s;z-index:50;white-space:nowrap;
   }
   #toast.on{opacity:1;transform:translate(-50%,0)}
+
+  /* 좁은 화면(320~359px) */
+  @media (max-width:359px){
+    .app{padding:0 10px 22px}
+    header{margin:0 -10px;padding:10px 10px 5px}
+    .q-head{padding:11px 10px}
+    .q-view{padding:1px 11px 12px}
+    .answer{padding:12px}
+    .pair .box{padding:10px 5px 9px}
+    .pair .box h4{font-size:11.5px}
+    .pair .box span{font-size:10px}
+    .step h3{font-size:14px}
+    .anchor{font-size:13px}
+  }
 </style>
 </head>
 <body>
@@ -482,7 +496,7 @@
             '<span class="q-title">' + (q.tag ? '<span class="q-tag">' + esc(q.tag) + '</span>' : '') + '<span>' + esc(q.q) + '</span></span>' +
             '<svg class="chev" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 6L8 10.5L12.5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
           '</button>' +
-          '<div class="q-body"><div class="q-inner"><div class="q-view">' +
+          '<div class="q-body" inert aria-hidden="true"><div class="q-inner"><div class="q-view">' +
             '<div class="blk"><div class="blk-label">첫 문장 · 앵커</div><p class="anchor">' + esc(v.a) + '</p></div>' +
             '<div class="blk"><div class="blk-label">키워드 3개</div><div class="chips">' + chips + '</div></div>' +
             '<div class="blk"><div class="blk-head"><span class="blk-label">예상 답변 예시</span>' +
@@ -497,7 +511,33 @@
       '<p class="flow-tip" style="margin-top:12px">질문이 들리면 2초 숨 고르고, 첫 문장부터 꺼내세요.</p>';
   }
 
-  function render() {
+  /* 접힌 카드의 내용은 화면에서도, 스크린리더에서도 숨긴다 */
+  function setOpen(card, on) {
+    if (!card) return;
+    var body = card.querySelector(".q-body");
+    var head = card.querySelector(".q-head");
+    if (on) {
+      card.classList.add("open");
+      if (head) head.setAttribute("aria-expanded", "true");
+      if (body) { body.removeAttribute("inert"); body.removeAttribute("aria-hidden"); }
+    } else {
+      card.classList.remove("open");
+      if (head) head.setAttribute("aria-expanded", "false");
+      if (body) { body.setAttribute("inert", ""); body.setAttribute("aria-hidden", "true"); }
+    }
+  }
+
+  /* 카드를 열었을 때 제목 줄이 상단 고정 헤더에 가리지 않게 */
+  function revealCard(card) {
+    if (!card) return;
+    var hd = document.querySelector("header");
+    var top = card.getBoundingClientRect().top;
+    var limit = (hd ? hd.getBoundingClientRect().height : 0) + 6;
+    if (top < limit) window.scrollBy(0, top - limit);
+  }
+
+  function render(keepScroll) {
+    var prevY = window.pageYOffset || document.documentElement.scrollTop || 0;
     if (activeTab === "flow") {
       view.innerHTML = flowHTML();
     } else {
@@ -505,18 +545,21 @@
       view.innerHTML = campusHTML(c);
     }
     setTabs();
+    var reopen = null;
     if (openId) {
-      var el = view.querySelector('[data-qid="' + openId + '"]');
-      if (el) {
-        el.classList.add("open");
-        el.querySelector(".q-head").setAttribute("aria-expanded", "true");
-      }
+      reopen = view.querySelector('[data-qid="' + openId + '"]');
+      if (reopen) setOpen(reopen, true);
       openId = null;
     }
     view.classList.remove("view");
     void view.offsetWidth;
     view.classList.add("view");
-    window.scrollTo(0, 0);
+    if (keepScroll) {
+      window.scrollTo(0, prevY);
+      if (reopen) revealCard(reopen);
+    } else {
+      window.scrollTo(0, 0);
+    }
   }
 
   /* ---------- interaction ---------- */
@@ -538,13 +581,10 @@
       var card = btn.closest(".q");
       var isOpen = card.classList.contains("open");
       var all = view.querySelectorAll(".q.open");
-      for (var i = 0; i < all.length; i++) {
-        all[i].classList.remove("open");
-        all[i].querySelector(".q-head").setAttribute("aria-expanded", "false");
-      }
+      for (var i = 0; i < all.length; i++) setOpen(all[i], false);
       if (!isOpen) {
-        card.classList.add("open");
-        btn.setAttribute("aria-expanded", "true");
+        setOpen(card, true);
+        revealCard(card);
       }
       return;
     }
@@ -565,8 +605,8 @@
           '<span class="hint">이 기기에만 저장</span></div>' +
         '</div>';
       openId = q.dataset.qid;
-      q.classList.add("open");
-      btn.setAttribute("aria-expanded", "true");
+      setOpen(q, true);
+      revealCard(q);
       var ta = inner.querySelector("textarea");
       if (ta) setTimeout(function () { ta.focus(); }, 60);
       return;
@@ -575,7 +615,7 @@
     if (act === "cancel") {
       var qc = btn.closest(".q");
       openId = qc.dataset.qid;
-      render();
+      render(true);
       return;
     }
 
@@ -594,7 +634,7 @@
       };
       saveStore();
       openId = qs.dataset.qid;
-      render();
+      render(true);
       toast(storageOK ? "저장했어요" : "저장했지만 이 브라우저는 저장을 막고 있어요");
       return;
     }
@@ -605,7 +645,7 @@
       delete store[activeTab + "-" + (idx3 + 1)];
       saveStore();
       openId = qr.dataset.qid;
-      render();
+      render(true);
       toast("기본 문구로 되돌렸어요");
       return;
     }
@@ -626,13 +666,13 @@
       return;
     }
 
-    if (act === "cancel-full") { render(); return; }
+    if (act === "cancel-full") { render(true); return; }
 
     if (act === "save-full") {
       var val = document.querySelector("#f-full").value.trim();
       if (val) store["answer-full"] = { e: val }; else delete store["answer-full"];
       saveStore();
-      render();
+      render(true);
       toast(storageOK ? "저장했어요" : "저장했지만 이 브라우저는 저장을 막고 있어요");
       return;
     }
@@ -640,7 +680,7 @@
     if (act === "revert-full") {
       delete store["answer-full"];
       saveStore();
-      render();
+      render(true);
       toast("기본 문구로 되돌렸어요");
       return;
     }
@@ -660,7 +700,7 @@
     if (!window.confirm("수정한 내용을 모두 지우고 처음 상태로 돌아갈까요?")) return;
     store = {};
     try { localStorage.removeItem(KEY); } catch (e) {}
-    render();
+    render(true);
     toast("처음 상태로 돌아왔어요");
   });
 
