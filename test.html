@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>뷰포트 테스트</title>
+<style>
+  body{margin:0;background:#DDE1E7;font-family:system-ui,sans-serif;display:flex;gap:14px;padding:12px;align-items:flex-start}
+  figure{margin:0;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+  figcaption{font-weight:600;font-size:11px;line-height:1.7;padding:2px 8px;background:#2A2F36;color:#fff}
+  iframe{display:block;border:0;height:900px;width:375px}
+  iframe.narrow{width:320px}
+</style>
+</head>
+<body>
+  <figure><figcaption>375px</figcaption><iframe id="f375" src="./index.html" title="375"></iframe></figure>
+  <figure><figcaption>320px</figcaption><iframe id="f320" class="narrow" src="./index.html" title="320"></iframe></figure>
+</body>
+</html>
